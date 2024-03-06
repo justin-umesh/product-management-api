@@ -18,11 +18,6 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 
@@ -30,19 +25,15 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">Products Management Api</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    The links for the documents
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://justinumesh.atlassian.net/wiki/external/ZDUxYmEzMTcyZDU4NDIzYzhlZWZhYjZmYmM0ZWUyYjI"><strong>Explore the Architecture docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://zvmm013xnd.execute-api.us-east-1.amazonaws.com/prod/v1/explorer">API documentation and Testing</a>
     ·
     <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
     ·
@@ -83,18 +74,10 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
-
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
+We are aiming to streamline product management processes. We envision a user-friendly REST API to efficiently manage products. The API should cater to various needs, such as: 
+* Creating new products by specifying their name, providing a price in USD, and optionally adding a description.
+* For retrieval, We desires a comprehensive view of a single product, where all fields are returned. To gauge product popularity, the API should automatically increment the view count. We also envisions flexibility, allowing users to request product details in different currencies, dynamically converted using real-time exchange rates from a reliable API like currencylayer API | Free, Reliable Currency Converter API .
+* When it comes to listing the most viewed products, We seek customization options. Users should have the ability to specify the number of products in the list and, if necessary, the desired currency for prices. Additionally, We want the capability to delete products. Although a deleted product should no longer appear in API responses, its information should be preserved in the database for thorough audit trails.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
