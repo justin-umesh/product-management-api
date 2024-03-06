@@ -1,0 +1,432 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "version": "1.0.0",
+        "title": "Product Management Api",
+        "description": ""
+    },
+    "servers": [
+        {
+            "url": "https://zvmm013xnd.execute-api.us-east-1.amazonaws.com/prod/v1"
+        },
+        {
+            "url": "https://zvmm013xnd.execute-api.us-east-1.amazonaws.com/prod/v2"
+        }
+    ],
+    "tags": [
+        {
+            "name": "product",
+            "description": "Everything about Products"
+        }
+    ],
+    "paths": {
+        "/product": {
+            "post": {
+                "tags": [
+                    "product"
+                ],
+                "summary": "Add a new product",
+                "description": "Add a new product",
+                "operationId": "addProduct",
+                "requestBody": {
+                    "description": "Create a new product",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProductInput"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/getProductRespone"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/products": {
+            "get": {
+                "tags": [
+                    "product"
+                ],
+                "summary": "Add a new product",
+                "description": "Add a new product",
+                "operationId": "productsAll",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/limit"
+                    },
+                    {
+                        "$ref": "#/components/parameters/cursor"
+                    },
+                    {
+                        "$ref": "#/components/parameters/currency"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sortby"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/getProductsRespone"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/product/{productId}": {
+            "get": {
+                "tags": [
+                    "product"
+                ],
+                "summary": "Find product by ID",
+                "description": "Returns a single product",
+                "operationId": "getProductById",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "ID of product to return",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/currency"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/getProductRespone"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "product"
+                ],
+                "summary": "Updates a product",
+                "description": "",
+                "operationId": "updateProductById",
+                "requestBody": {
+                    "description": "Update the product by ID",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProductInput"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "ID of product that needs to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "product"
+                ],
+                "summary": "Deletes a product",
+                "description": "",
+                "operationId": "deleteProduct",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "Product id to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid product value"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "parameters": {
+            "limit": {
+                "description": "Number of results to return. Minimum 1, Maximum 200, Default 20",
+                "in": "query",
+                "name": "limit",
+                "schema": {
+                    "default": 20,
+                    "maximum": 200,
+                    "minimum": 1,
+                    "type": "integer"
+                }
+            },
+            "cursor": {
+                "description": "Cursor to start from. You can find cursors for next/previous pages in the meta.cursors property of the response.",
+                "in": "query",
+                "name": "cursor",
+                "schema": {
+                    "nullable": true,
+                    "type": "string"
+                }
+            },
+            "currency": {
+                "description": "The desired currency for prices.",
+                "in": "query",
+                "name": "currency",
+                "explode": true,
+                "schema": {
+                    "nullable": true,
+                    "default": "USD",
+                    "type": "string",
+                    "enum": [
+                        "USD",
+                        "CAD",
+                        "EUR",
+                        "GBP"
+                    ]
+                }
+            },
+            "sortby": {
+                "description": "Sort the products by popularity, price, etc",
+                "in": "query",
+                "name": "sortby",
+                "explode": true,
+                "schema": {
+                    "nullable": true,
+                    "default": "popularity",
+                    "type": "string",
+                    "enum": [
+                        "popularity",
+                        "pricelowtohigh",
+                        "pricehightolow",
+                        "newest"
+                    ]
+                }
+            }
+        },
+        "schemas": {
+            "Product": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "iPhone"
+                    },
+                    "price": {
+                        "type": "integer",
+                        "format": "double",
+                        "example": 100.50
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "15 cm (6.1-inch) Super Retina XDR display Cinematic mode adds shallow depth of field and shifts focus automatically in your videos"
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "active",
+                        "enum": [
+                            "active",
+                            "draft",
+                            "archived"
+                        ]
+                    },
+                    "views": {
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "getProductRespone": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/Product"
+                    },
+                    "status_code": {
+                        "description": "HTTP Response Status Code",
+                        "example": 200,
+                        "type": "integer"
+                    }
+                }
+            },
+            "getProductsRespone": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "items": {
+                            "$ref": "#/components/schemas/Product"
+                        },
+                        "type": "array"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/Links"
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/Meta"
+                    }
+                }
+            },
+            "ProductInput": {
+                "required": [
+                    "name",
+                    "price"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "iPhone"
+                    },
+                    "price": {
+                        "type": "integer",
+                        "format": "double",
+                        "example": 100.50
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "15 cm (6.1-inch) Super Retina XDR display Cinematic mode adds shallow depth of field and shifts focus automatically in your videos"
+                    }
+                }
+            },
+            "ApiResponse": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "xml": {
+                    "name": "##default"
+                }
+            },
+            "Links": {
+                "description": "Links to navigate to previous or next pages through the API",
+                "properties": {
+                    "current": {
+                        "description": "Link to navigate to the current page through the API",
+                        "example": "https://products-api.com",
+                        "type": "string"
+                    },
+                    "next": {
+                        "description": "Link to navigate to the previous page through the API",
+                        "example": "https://products-api.com?cursor=em9oby1jcm06OnBhZ2U6OjM",
+                        "nullable": true,
+                        "type": "string"
+                    },
+                    "previous": {
+                        "description": "Link to navigate to the previous page through the API",
+                        "example": "https://products-api.com?cursor=em9oby1jcm06OnBhZ2U6OjE%3D",
+                        "nullable": true,
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Meta": {
+                "description": "Response metadata",
+                "properties": {
+                    "cursors": {
+                        "description": "Cursors to navigate to previous or next pages through the API",
+                        "properties": {
+                            "current": {
+                                "description": "Cursor to navigate to the current page of results through the API",
+                                "example": "em9oby1jcm06OnBhZ2U6OjI=",
+                                "nullable": true,
+                                "type": "string"
+                            },
+                            "next": {
+                                "description": "Cursor to navigate to the next page of results through the API",
+                                "example": "em9oby1jcm06OnBhZ2U6OjM=",
+                                "nullable": true,
+                                "type": "string"
+                            },
+                            "previous": {
+                                "description": "Cursor to navigate to the previous page of results through the API",
+                                "example": "em9oby1jcm06OnBhZ2U6OjE=",
+                                "nullable": true,
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "items_on_page": {
+                        "description": "Number of items returned in the data property of the response",
+                        "example": 50,
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
